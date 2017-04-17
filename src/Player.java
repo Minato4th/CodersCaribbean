@@ -52,7 +52,6 @@ class Controller{
     public void setDefineEntities(){
         MovementInitializer movementInitializer = new MovementInitializer(entities);
         command = movementInitializer.CoordinateMovement();
-        //System.err.println(command.get(0));
     }
 
 
@@ -128,9 +127,6 @@ class Coordinate{
                                                                     {"STARBOARD", "STARBOARD", "STARBOARD", "0", "PORT", "PORT"},
                                                                     {"PORT", "PORT", "STARBOARD", "STARBOARD", "0", "PORT"},
                                                                     {"PORT", "PORT", "STARBOARD", "STARBOARD", "STARBOARD", "0"}};
-    private final int EVEN = 2;
-    private final int ODD = 3;
-    private int[][] direction;
 
     List<Move> movement = new ArrayList<>();
 
@@ -144,16 +140,10 @@ class Coordinate{
         calculateCoordinate();
 
         for (Move move : movement) {
-            //System.err.println("Rotation " + move.getRotationCommand());
-            //System.err.println("Before " + move.getRotationCommand());
             if ((move.getRotationCommand().equals(Action.PORT.getAction())) || (move.getRotationCommand().equals(Action.STARBOARD.getAction()))){
-                //System.err.println("After " + move.getRotationCommand());
                 moves.add(move.getRotationCommand());
             } else moves.add("MOVE " + move.getxBarrel() + " " + move.getyBarrel());
-            //System.err.println("After " + move.getRotationCommand());
         }
-
-        //System.err.println("After " + moves.get(0));
 
         return moves;
     }
@@ -246,33 +236,6 @@ class Coordinate{
             System.err.println("5");
         }
 
-        
-        /*if (move.getyShip() < move.getyBarrel()){
-            if (move.getxShip() > move.getxBarrel()){
-                move.setRotationCommand(Coordinate.ROTATION_COMAND[move.getRotation()][Compass.FOUR.getDirection()]);
-            }else if (move.getxShip() < move.getxBarrel()){
-                move.setRotationCommand(Coordinate.ROTATION_COMAND[move.getRotation()][Compass.FIVE.getDirection()]);
-            }else if (move.getxShip() == move.getxBarrel()){
-                move.setRotationCommand(Coordinate.ROTATION_COMAND[move.getRotation()][Compass.FOUR.getDirection()]);
-            }
-        }else if (move.getyShip() == move.getyBarrel()){
-            if (move.getxShip() > move.getxBarrel()){
-                move.setRotationCommand(Coordinate.ROTATION_COMAND[move.getRotation()][Compass.THREE.getDirection()]);
-            }else if (move.getxShip() < move.getxBarrel()){
-                move.setRotationCommand(Coordinate.ROTATION_COMAND[move.getRotation()][Compass.ZERO.getDirection()]);
-            }
-        }else if (move.getyShip() > move.getyBarrel()){
-            if (move.getxShip() > move.getxBarrel()){
-                move.setRotationCommand(Coordinate.ROTATION_COMAND[move.getRotation()][Compass.TWO.getDirection()]);
-                System.err.println("Here2");
-            }else if (move.getxShip() < move.getxBarrel()){
-                System.err.println("Here");
-                move.setRotationCommand(Coordinate.ROTATION_COMAND[move.getRotation()][Compass.ONE.getDirection()]);
-            }else if (move.getxShip() == move.getxBarrel()){
-                move.setRotationCommand(Coordinate.ROTATION_COMAND[move.getRotation()][Compass.TWO.getDirection()]);
-            }
-        }*/
-
         return move;
     }
 
@@ -307,9 +270,6 @@ class Coordinate{
     }
 
     private Move calcEven(Move move){
-
-        /*System.err.println(move.getyShip() + " " + move.getyBarrel());
-        System.err.println(move.getxShip() + " " + move.getxBarrel());*/
 
         if (move.getyShip() < move.getyBarrel()){
             if (move.getxShip() > move.getxBarrel()){
@@ -352,54 +312,6 @@ class Coordinate{
         }
         return move;
     }
-
-
-    /*private Move calcEvenOdd(int parity, Move move){
-        //System.err.println(parity);
-        if (parity == EVEN) {
-            direction = DIRECTIONS_EVEN;
-        } else if (parity == ODD){
-            direction = DIRECTIONS_ODD;
-            System.err.println("ODD");
-        }
-
-        System.err.println(move.getyShip() + " " + move.getyBarrel());
-        System.err.println(move.getxShip() + " " + move.getxBarrel());
-
-        if (move.getyShip() < move.getyBarrel()){
-            if (move.getxShip() > move.getxBarrel()){
-                move.setxBarrel(move.getxShip() + direction[4][0]);
-                move.setyBarrel(move.getyShip() + direction[4][1]);
-            }else if (move.getxShip() < move.getxBarrel()){
-                move.setxBarrel(move.getxShip() + direction[5][0]);
-                move.setyBarrel(move.getyShip() + direction[5][1]);
-            }else if (move.getxShip() == move.getxBarrel()){
-                move.setxBarrel(move.getxShip() + direction[4][0]);
-                move.setyBarrel(move.getyShip() + direction[4][1]);
-            }
-        }else if (move.getyShip() == move.getyBarrel()){
-            if (move.getxShip() > move.getxBarrel()){
-                move.setxBarrel(move.getxShip() + direction[3][0]);
-                move.setyBarrel(move.getyShip() + direction[3][1]);
-                //System.err.println(move.getxShip() + " " + direction[3][0] + " " + move.getyShip() + " " + direction[3][1]);
-            }else if (move.getxShip() < move.getxBarrel()){
-                move.setxBarrel(move.getxShip() + direction[0][0]);
-                move.setyBarrel(move.getyShip() + direction[0][1]);
-            }
-        }else if (move.getyShip() > move.getyBarrel()){
-            if (move.getxShip() > move.getxBarrel()){
-                move.setxBarrel(move.getxShip() + direction[2][0]);
-                move.setyBarrel(move.getyShip() + direction[2][1]);
-            }else if (move.getxShip() < move.getxBarrel()){
-                move.setxBarrel(move.getxShip() + direction[1][0]);
-                move.setyBarrel(move.getyShip() + direction[1][1]);
-            }else if (move.getxShip() == move.getxBarrel()){
-                move.setxBarrel(move.getxShip() + direction[1][0]);
-                move.setyBarrel(move.getyShip() + direction[1][1]);
-            }
-        }
-        return move;
-    }*/
 }
 
 class WhereToGo {
@@ -432,7 +344,7 @@ class WhereToGo {
             position++;
         }
 
-        //changeDuplicateBarrels();
+        changeDuplicateBarrels();
         return movement;
     }
 
@@ -458,21 +370,6 @@ class WhereToGo {
 
     private int rotation(Move move){
         int rotation = 0;
-
-        /*for (int i = 0; i < Coordinate.ROTATION_PATH.length ; i++) {
-            for (int j = 0; j < Coordinate.ROTATION_PATH.length; j++) {
-                System.err.print(Coordinate.ROTATION_PATH[j][i]);
-            }
-            System.err.println();
-        }*/
-
-
-        /*System.err.println(Coordinate.ROTATION_PATH[move.getRotation()][Compass.ZERO.getDirection()]);
-        System.err.println(Coordinate.ROTATION_PATH[move.getRotation()][Compass.ONE.getDirection()]);
-        System.err.println(Coordinate.ROTATION_PATH[move.getRotation()][Compass.TWO.getDirection()]);
-        System.err.println(Coordinate.ROTATION_PATH[move.getRotation()][Compass.THREE.getDirection()]);
-        System.err.println(Coordinate.ROTATION_PATH[move.getRotation()][Compass.FOUR.getDirection()]);
-        System.err.println(Coordinate.ROTATION_PATH[move.getRotation()][Compass.FIVE.getDirection()]);*/
 
         if (move.getyShip() < move.getyBarrel()){
             if (move.getxShip() > move.getxBarrel()){
